@@ -1,0 +1,34 @@
+{
+  "name": "kit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "run-p --continue-on-error lint:*",
+    "lint:eslint": "eslint --ext .jsx,.js .",
+    "lint:prettier": "prettier --check .",
+    "fix": "run-p --continue-on-error fix:*",
+    "fix:eslint": "eslint --ext .jsx,.js --fix .",
+    "fix:prettier": "prettier --write ."
+  },
+  "dependencies": {
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "eslint-plugin-sort-keys-custom-order": "^1.0.3",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1"
+  }
+}
