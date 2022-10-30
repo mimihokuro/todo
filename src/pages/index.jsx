@@ -20,6 +20,15 @@ export default function Home() {
     setTodoText("");
   }, [todoText]);
 
+  const handleTodoDelete = useCallback(
+    (index) => {
+      console.log(index);
+      console.log(todoList);
+      setTodoList((prevTodoList) => prevTodoList.splice(index, 1));
+    },
+    [todoList]
+  );
+
   return (
     <div>
       <h1>TODO</h1>
@@ -27,8 +36,13 @@ export default function Home() {
         <button onClick={addNewTodo}>追加ボタン</button>
         <input value={todoText} onChange={inputTodoText} />
         <ul>
-          {todoList.map((todo) => {
-            return <li key={todo}>{todo}</li>;
+          {todoList.map((todo, index) => {
+            return (
+              <li key={todo}>
+                {todo}
+                <button onClick={() => handleTodoDelete(index)}>削除</button>
+              </li>
+            );
           })}
         </ul>
       </div>
