@@ -14,6 +14,10 @@ export default function Home() {
         alert("すでに登録されています。別のTODOを登録してください。");
         return prevTodoList;
       }
+      if (todoText === "") {
+        alert("入力がありません。TODOを登録してください。");
+        return prevTodoList;
+      }
       const newTodoList = [...prevTodoList, todoText];
       return newTodoList;
     });
@@ -41,7 +45,7 @@ export default function Home() {
         <ul>
           {todoList.map((todo, index) => {
             return (
-              <li key={todo}>
+              <li key={index}>
                 {todo}
                 <button onClick={() => handleTodoDelete(index)}>削除</button>
               </li>
