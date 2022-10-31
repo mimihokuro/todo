@@ -22,9 +22,12 @@ export default function Home() {
 
   const handleTodoDelete = useCallback(
     (index) => {
-      console.log(index);
-      console.log(todoList);
-      setTodoList((prevTodoList) => prevTodoList.splice(index, 1));
+      setTodoList((prevTodoList) => {
+        const afterDeleteTodoList = [...prevTodoList];
+        afterDeleteTodoList.splice(index, 1);
+        return afterDeleteTodoList;
+      });
+      return todoList;
     },
     [todoList]
   );
