@@ -2,14 +2,15 @@ import React, { useCallback, useState } from "react";
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
-  const [todoList, setTodoList] = useState([]);
+  const [incompletedTodoList, setIncompletedTodoList] = useState([]);
+  const [completedTodoList, setCompletedTodoList] = useState([]);
 
   const inputTodoText = useCallback((e) => {
     setTodoText(e.target.value);
   }, []);
 
   const addNewTodo = useCallback(() => {
-    setTodoList((prevTodoList) => {
+    setIncompletedTodoList((prevTodoList) => {
       if (prevTodoList.some((item) => item === todoText)) {
         alert("すでに登録されています。別のTODOを登録してください。");
         return prevTodoList;
@@ -24,16 +25,32 @@ export default function Home() {
     setTodoText("");
   }, [todoText]);
 
+  const handleTodoComplete = useCallback(
+    (index) => {
+      setIncompletedTodoList((prevTodoList) => {
+        const takenOutTodoList = [...prevTodoList];
+        takenOutTodoList.splice(index, 1);
+        return takenOutTodoList;
+      });
+      setCompletedTodoList((prevTodoList) => {
+        const takenOutTodo = incompletedTodoList[index];
+        const addCompletedTodoList = [...prevTodoList, takenOutTodo];
+        return addCompletedTodoList;
+      });
+    },
+    [incompletedTodoList]
+  );
+
   const handleTodoDelete = useCallback(
     (index) => {
-      setTodoList((prevTodoList) => {
+      setCompletedTodoList((prevTodoList) => {
         const afterDeleteTodoList = [...prevTodoList];
         afterDeleteTodoList.splice(index, 1);
         return afterDeleteTodoList;
       });
-      return todoList;
+      return completedTodoList;
     },
-    [todoList]
+    [completedTodoList]
   );
 
   return (
@@ -43,7 +60,17 @@ export default function Home() {
         <button onClick={addNewTodo}>追加ボタン</button>
         <input value={todoText} onChange={inputTodoText} />
         <ul>
-          {todoList.map((todo, index) => {
+          {incompletedTodoList.map((todo, index) => {
+            return (
+              <li key={index}>
+                {todo}
+                <button onClick={() => handleTodoComplete(index)}>完了</button>
+              </li>
+            );
+          })}
+        </ul>
+        <ul>
+          {completedTodoList.map((todo, index) => {
             return (
               <li key={index}>
                 {todo}
