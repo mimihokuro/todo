@@ -106,7 +106,7 @@ export default function Home() {
               <li key={index}>
                 {todo}
                 <button onClick={() => handleTodoIncomplete(index)}>
-                  完了に戻す
+                  未完了に戻す
                 </button>
                 <button onClick={() => handleTodoDelete(index)}>削除</button>
               </li>
