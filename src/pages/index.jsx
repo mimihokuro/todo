@@ -41,6 +41,22 @@ export default function Home() {
     [incompletedTodoList]
   );
 
+  const handleTodoIncomplete = useCallback(
+    (index) => {
+      setCompletedTodoList((prevTodoList) => {
+        const takenOutTodoList = [...prevTodoList];
+        takenOutTodoList.splice(index, 1);
+        return takenOutTodoList;
+      });
+      setIncompletedTodoList((prevTodoList) => {
+        const takenOutTodo = completedTodoList[index];
+        const addCompletedTodoList = [...prevTodoList, takenOutTodo];
+        return addCompletedTodoList;
+      });
+    },
+    [completedTodoList]
+  );
+
   const handleTodoDelete = useCallback(
     (index) => {
       setCompletedTodoList((prevTodoList) => {
