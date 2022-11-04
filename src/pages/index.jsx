@@ -1,9 +1,12 @@
 import React, { useCallback, useState } from "react";
 
+const TODOS = [];
+const COMPLETE_TODOS = [];
+
 export default function Home() {
   const [todoText, setTodoText] = useState("");
-  const [incompletedTodoList, setIncompletedTodoList] = useState([]);
-  const [completedTodoList, setCompletedTodoList] = useState([]);
+  const [incompletedTodoList, setIncompletedTodoList] = useState(TODOS);
+  const [completedTodoList, setCompletedTodoList] = useState(COMPLETE_TODOS);
 
   const inputTodoText = useCallback((e) => {
     setTodoText(e.target.value);
@@ -85,7 +88,7 @@ export default function Home() {
     <div>
       <h1>TODO</h1>
       <div>
-        <button onClick={addNewTodo}>追加ボタン</button>
+        <button onClick={addNewTodo}>Add TODO</button>
         <input value={todoText} onChange={inputTodoText} />
         <h2>未完了</h2>
         <ul>
@@ -94,7 +97,7 @@ export default function Home() {
               <li key={index}>
                 {todo}
                 <button onClick={() => handleTodoComplete(index)}>完了</button>
-                <button onClick={() => handleTodoCancel(index)}>削除</button>
+                <button onClick={() => handleTodoCancel(index)}>×</button>
               </li>
             );
           })}
@@ -104,11 +107,13 @@ export default function Home() {
           {completedTodoList.map((todo, index) => {
             return (
               <li key={index}>
-                {todo}
-                <button onClick={() => handleTodoIncomplete(index)}>
-                  未完了に戻す
-                </button>
-                <button onClick={() => handleTodoDelete(index)}>削除</button>
+                <label>
+                  {todo}
+                  <button onClick={() => handleTodoIncomplete(index)}>
+                    未完了にする
+                  </button>
+                </label>
+                <button onClick={() => handleTodoDelete(index)}>×</button>
               </li>
             );
           })}
