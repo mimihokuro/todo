@@ -5,15 +5,15 @@ const COMPLETE_TODOS = [];
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
-  const [incompletedTodoList, setIncompletedTodoList] = useState(TODOS);
-  const [completedTodoList, setCompletedTodoList] = useState(COMPLETE_TODOS);
+  const [incompleteTodoList, setIncompleteTodoList] = useState(TODOS);
+  const [completeTodoList, setCompleteTodoList] = useState(COMPLETE_TODOS);
 
-  const inputTodoText = useCallback((e) => {
+  const handleInputTodoText = useCallback((e) => {
     setTodoText(e.target.value);
   }, []);
 
-  const addNewTodo = useCallback(() => {
-    setIncompletedTodoList((prevTodoList) => {
+  const handleAddNewTodo = useCallback(() => {
+    setIncompleteTodoList((prevTodoList) => {
       if (prevTodoList.some((item) => item === todoText)) {
         alert("すでに登録されています。別のTODOを登録してください。");
         return prevTodoList;
@@ -28,55 +28,55 @@ export default function Home() {
     setTodoText("");
   }, [todoText]);
 
-  const handleTodoComplete = useCallback(
+  const handleCompleteTodo = useCallback(
     (index) => {
-      setIncompletedTodoList((prevTodoList) =>
-        takeOutTodoInTodoList(prevTodoList, index)
+      setIncompleteTodoList((prevTodoList) =>
+        handleTakeOutTodo(prevTodoList, index)
       );
-      setCompletedTodoList((prevTodoList) => {
-        const takenOutTodo = incompletedTodoList[index];
-        const addCompletedTodoList = [...prevTodoList, takenOutTodo];
-        return addCompletedTodoList;
+      setCompleteTodoList((prevTodoList) => {
+        const takenOutTodo = incompleteTodoList[index];
+        const newCompleteTodoList = [...prevTodoList, takenOutTodo];
+        return newCompleteTodoList;
       });
     },
-    [incompletedTodoList]
+    [incompleteTodoList]
   );
 
-  const handleTodoIncomplete = useCallback(
+  const handleIncompleteTodo = useCallback(
     (index) => {
-      setCompletedTodoList((prevTodoList) =>
-        takeOutTodoInTodoList(prevTodoList, index)
+      setCompleteTodoList((prevTodoList) =>
+        handleTakeOutTodo(prevTodoList, index)
       );
-      setIncompletedTodoList((prevTodoList) => {
-        const takenOutTodo = completedTodoList[index];
-        const addCompletedTodoList = [...prevTodoList, takenOutTodo];
-        return addCompletedTodoList;
+      setIncompleteTodoList((prevTodoList) => {
+        const takenOutTodo = completeTodoList[index];
+        const returnedIncompleteTodoList = [...prevTodoList, takenOutTodo];
+        return returnedIncompleteTodoList;
       });
     },
-    [completedTodoList]
+    [completeTodoList]
   );
 
-  const handleTodoCancel = useCallback(
+  const handleCancelTodo = useCallback(
     (index) => {
-      setIncompletedTodoList((prevTodoList) =>
-        takeOutTodoInTodoList(prevTodoList, index)
+      setIncompleteTodoList((prevTodoList) =>
+        handleTakeOutTodo(prevTodoList, index)
       );
-      return incompletedTodoList;
+      return incompleteTodoList;
     },
-    [incompletedTodoList]
+    [incompleteTodoList]
   );
 
-  const handleTodoDelete = useCallback(
+  const handleDeleteTodo = useCallback(
     (index) => {
-      setCompletedTodoList((prevTodoList) =>
-        takeOutTodoInTodoList(prevTodoList, index)
+      setCompleteTodoList((prevTodoList) =>
+        handleTakeOutTodo(prevTodoList, index)
       );
-      return completedTodoList;
+      return completeTodoList;
     },
-    [completedTodoList]
+    [completeTodoList]
   );
 
-  const takeOutTodoInTodoList = (prevTodoList, index) => {
+  const handleTakeOutTodo = (prevTodoList, index) => {
     const takenOutTodoList = [...prevTodoList];
     takenOutTodoList.splice(index, 1);
     return takenOutTodoList;
@@ -86,32 +86,32 @@ export default function Home() {
     <div>
       <h1>TODO</h1>
       <div>
-        <button onClick={addNewTodo}>Add TODO</button>
-        <input value={todoText} onChange={inputTodoText} />
+        <button onClick={handleAddNewTodo}>Add TODO</button>
+        <input value={todoText} onChange={handleInputTodoText} />
         <h2>未完了</h2>
         <ul>
-          {incompletedTodoList.map((todo, index) => {
+          {incompleteTodoList.map((todo, index) => {
             return (
               <li key={index}>
                 {todo}
-                <button onClick={() => handleTodoComplete(index)}>完了</button>
-                <button onClick={() => handleTodoCancel(index)}>×</button>
+                <button onClick={() => handleCompleteTodo(index)}>完了</button>
+                <button onClick={() => handleCancelTodo(index)}>×</button>
               </li>
             );
           })}
         </ul>
         <h2>完了</h2>
         <ul>
-          {completedTodoList.map((todo, index) => {
+          {completeTodoList.map((todo, index) => {
             return (
               <li key={index}>
                 <label>
                   {todo}
-                  <button onClick={() => handleTodoIncomplete(index)}>
+                  <button onClick={() => handleIncompleteTodo(index)}>
                     未完了にする
                   </button>
                 </label>
-                <button onClick={() => handleTodoDelete(index)}>×</button>
+                <button onClick={() => handleDeleteTodo(index)}>×</button>
               </li>
             );
           })}
