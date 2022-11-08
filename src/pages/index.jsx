@@ -30,11 +30,9 @@ export default function Home() {
 
   const handleTodoComplete = useCallback(
     (index) => {
-      setIncompletedTodoList((prevTodoList) => {
-        const takenOutTodoList = [...prevTodoList];
-        takenOutTodoList.splice(index, 1);
-        return takenOutTodoList;
-      });
+      setIncompletedTodoList((prevTodoList) =>
+        takeOutTodoInTodoList(prevTodoList, index)
+      );
       setCompletedTodoList((prevTodoList) => {
         const takenOutTodo = incompletedTodoList[index];
         const addCompletedTodoList = [...prevTodoList, takenOutTodo];
@@ -46,11 +44,9 @@ export default function Home() {
 
   const handleTodoIncomplete = useCallback(
     (index) => {
-      setCompletedTodoList((prevTodoList) => {
-        const takenOutTodoList = [...prevTodoList];
-        takenOutTodoList.splice(index, 1);
-        return takenOutTodoList;
-      });
+      setCompletedTodoList((prevTodoList) =>
+        takeOutTodoInTodoList(prevTodoList, index)
+      );
       setIncompletedTodoList((prevTodoList) => {
         const takenOutTodo = completedTodoList[index];
         const addCompletedTodoList = [...prevTodoList, takenOutTodo];
@@ -62,11 +58,9 @@ export default function Home() {
 
   const handleTodoCancel = useCallback(
     (index) => {
-      setIncompletedTodoList((prevTodoList) => {
-        const afterDeleteTodoList = [...prevTodoList];
-        afterDeleteTodoList.splice(index, 1);
-        return afterDeleteTodoList;
-      });
+      setIncompletedTodoList((prevTodoList) =>
+        takeOutTodoInTodoList(prevTodoList, index)
+      );
       return incompletedTodoList;
     },
     [incompletedTodoList]
@@ -74,15 +68,19 @@ export default function Home() {
 
   const handleTodoDelete = useCallback(
     (index) => {
-      setCompletedTodoList((prevTodoList) => {
-        const afterDeleteTodoList = [...prevTodoList];
-        afterDeleteTodoList.splice(index, 1);
-        return afterDeleteTodoList;
-      });
+      setCompletedTodoList((prevTodoList) =>
+        takeOutTodoInTodoList(prevTodoList, index)
+      );
       return completedTodoList;
     },
     [completedTodoList]
   );
+
+  const takeOutTodoInTodoList = (prevTodoList, index) => {
+    const takenOutTodoList = [...prevTodoList];
+    takenOutTodoList.splice(index, 1);
+    return takenOutTodoList;
+  };
 
   return (
     <div>
