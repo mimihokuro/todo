@@ -84,7 +84,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>TODO</h1>
+      <h1 className="text-3xl">TODO</h1>
       <div>
         <button onClick={handleAddNewTodo}>Add TODO</button>
         <input value={todoText} onChange={handleInputTodoText} />
